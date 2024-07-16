@@ -41,7 +41,7 @@ class Spam(Cog):
                         ]
             for chunk in chunker(tasks, 100):
 
-                Thread(chunk).start()
+                Thread(chunk)
             
 
             await ctx.message.add_reaction("<:tiredskull:1195760828134211594>")
