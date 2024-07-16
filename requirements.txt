@@ -1,3 +1,4 @@
 discord
 aiohttp
 colorlog
+pydantic-settings
