@@ -1,9 +1,7 @@
-import datetime
 import os as _os
 import pkgutil as _pkgutil
 from typing import Iterator as _Iterator
 
-import disnake
 
 
 def protected(user_id: str):
@@ -14,13 +12,6 @@ def protected(user_id: str):
         return False
     
 
-def create_error_embed(err : str) -> disnake.Embed:
-    err_embed = disnake.Embed(title="We Got an Error!",
-                              color=disnake.Color.from_rgb(255, 3, 7),
-                              description="<:tiredskull:1195760828134211594> "+str(err),
-                              timestamp=datetime.datetime.now())
-
-    return err_embed
 
 def chunker(text, chunk_size: int) -> list:
     length = len(text)
