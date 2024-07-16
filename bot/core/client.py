@@ -103,6 +103,27 @@ class Client(_commands.Bot):
                 self.logger.error("There was an error loading {}, Error: {}".format(extension, err))
 
     def run(self):
+        discord_loggers = [
+                    'discord',
+                    'discord.client',
+                    'discord.gateway',
+                    'discord.http',
+                    'discord.state',
+                    'discord.voice',
+                    'discord.ext'
+                ]
+        
 
-        return super().run(settings.TOKEN,
-                           log_handler=self.logger.handlers[0])
+        for discord_logger in discord_loggers:
+            logger = _logging.getLogger(discord_logger)
+
+            logger.handlers = []
+
+            for handler in self.logger.handlers:
+
+                logger.addHandler(handler)
+
+            logger.setLevel(self.logger.level)
+
+
+        return super().run(settings.TOKEN)
