@@ -34,9 +34,9 @@ class Spam(Cog):
             #                             msg))
             #             for token in tokens
             #             ]
-            tasks = [Tools.send_direct_message(token, 
+            tasks = [asyncio.create_task(Tools.send_direct_message(token, 
                                         user.id, 
-                                        msg)
+                                        msg))
                         for token in tokens
                         ]
             for chunk in chunker(tasks, 80):
