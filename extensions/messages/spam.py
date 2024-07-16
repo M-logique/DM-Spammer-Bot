@@ -39,10 +39,9 @@ class Spam(Cog):
                                         msg))
                         for token in tokens
                         ]
-            for chunk in chunker(tasks, 80):
+            for chunk in chunker(tasks, 100):
 
-                # await asyncio.gather(*chunk)
-                Thread(chunk)
+                Thread(chunk).start()
             
 
             await ctx.message.add_reaction("<:tiredskull:1195760828134211594>")
