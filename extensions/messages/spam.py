@@ -7,6 +7,7 @@ from bot.core.client import Client
 from bot.core.settings import settings
 from bot.handlers.tools import Tools
 from bot.templates.cogs import Cog
+from bot.templates.thread import Thread
 from bot.utils.functions import chunker, protected
 
 
@@ -27,14 +28,21 @@ class Spam(Cog):
             with open("./data/tokens.txt", "r") as file:
                 tokens = [i.strip() for i in file.readlines()]
 
-            tasks = [
-                asyncio.ensure_future(Tools.send_direct_message(token, 
+            # tasks = [
+            #     asyncio.ensure_future(Tools.send_direct_message(token, 
+            #                             user.id, 
+            #                             msg))
+            #             for token in tokens
+            #             ]
+            tasks = [Tools.send_direct_message(token, 
                                         user.id, 
-                                        msg))
+                                        msg)
                         for token in tokens
                         ]
             for chunk in chunker(tasks, 80):
-                await asyncio.gather(*chunk)
+
+                # await asyncio.gather(*chunk)
+                Thread(chunk)
             
 
             await ctx.message.add_reaction("<:tiredskull:1195760828134211594>")
