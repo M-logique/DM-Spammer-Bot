@@ -79,7 +79,7 @@ class Tools:
                 async with session.post(url, json=payload, headers=headers) as r:
                     if r.status != 200: return False
 
-                    channel = r.json()["id"]
+                    channel = (await r.json())["id"]
 
                     return Tools.send_message(token, channel, message)
 

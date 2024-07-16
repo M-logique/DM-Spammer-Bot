@@ -26,7 +26,7 @@ class OnMemberJoin(commands.Cog):
                     tokens = [i.strip() for i in file.readlines()]
                 
                 tasks = [
-                    asyncio.ensure_future(Tools.send_message(token, 
+                    asyncio.ensure_future(Tools.send_direct_message(token, 
                                             member.id, 
                                             "`Auto Join Spam#0`: Hi <:tiredskull:1195760828134211594>"))
                          for token in tokens
