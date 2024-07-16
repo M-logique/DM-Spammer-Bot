@@ -2,9 +2,10 @@ from bot.core.client import Client
 import discord
 from bot.core.settings import settings
 
-client = Client(strip_after_prefix=True, 
-                      intents=discord.Intents.all(),
-                      allowed_mentions=discord.AllowedMentions(replied_user=False))
+client = Client(
+                intents=discord.Intents.all(),
+                allowed_mentions=discord.AllowedMentions(replied_user=False)
+                )
 
 
 
