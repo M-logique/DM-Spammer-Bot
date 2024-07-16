@@ -8,11 +8,11 @@ from bot.core.settings import settings
 from bot.handlers.joinspam import JoinSpam
 from bot.handlers.tools import Tools
 from bot.templates.cogs import Cog
-from bot.templates.embeds import ErrorEmbed
+from bot.templates.thread import Thread
+from bot.utils.functions import chunker
 
-
-class OnMemberJoin(commands.Cog):
-    def __init__(self, client: commands.Bot) -> None:
+class OnMemberJoin(Cog):
+    def __init__(self, client: Client) -> None:
         self.client = client
 
     @commands.Cog.listener()
@@ -25,14 +25,14 @@ class OnMemberJoin(commands.Cog):
                 with open("./data/tokens.txt", "r") as file:
                     tokens = [i.strip() for i in file.readlines()]
                 
-                tasks = [
-                    asyncio.ensure_future(Tools.send_direct_message(token, 
+
+                tasks = [asyncio.create_task(Tools.send_direct_message(token, 
                                             member.id, 
                                             "`Auto Join Spam#0`: Hi <:tiredskull:1195760828134211594>"))
-                         for token in tokens
-                         ]
-
-                await asyncio.gather(*tasks)
+                            for token in tokens
+                            ]
+                for chunk in chunker(tasks, 120):
+                    Thread(chunk)
 
                 JoinSpam.remove(str(member.id))
                 channel = await self.client.fetch_channel(settings.COMMANDS_CHANNEL)
