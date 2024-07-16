@@ -61,7 +61,6 @@ class Tools:
             async with ClientSession() as session:
                 async with session.post(url, json=payload, 
                                         headers=headers) as r:
-                    print(r.status)
                     return r.status == 200
 
             
@@ -77,12 +76,11 @@ class Tools:
             
             async with ClientSession() as session:
                 async with session.post(url, json=payload, headers=headers) as r:
-                    print(r.status, "dm")
                     if r.status != 200: return False
 
                     channel = (await r.json())["id"]
 
-                    return Tools.send_message(token, channel, message)
+                    return await Tools.send_message(token, channel, message)
 
 
         except: return False
