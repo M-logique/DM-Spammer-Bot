@@ -8,7 +8,7 @@ from bot.core.client import Client
 from bot.core.settings import settings
 from bot.templates.cogs import Cog
 
-MAIN_COLOR = discord.Color(settings.MAIN_COLOR)
+MAIN_COLOR = discord.Color(*settings.MAIN_COLOR)
 
 class Buttons(discord.ui.View):
     def __init__(self, author, chunk) -> None:

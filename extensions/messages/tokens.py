@@ -22,4 +22,4 @@ class TokenTools(Cog):
             await ctx.message.add_reaction("👌🏿")
 
 
-def setup(client): client.add_cog(TokenTools(client))
+async def setup(client): await client.add_cog(TokenTools(client))
