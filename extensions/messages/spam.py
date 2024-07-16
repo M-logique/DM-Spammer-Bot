@@ -1,5 +1,4 @@
 import asyncio
-import random
 
 import discord
 from discord.ext import commands
@@ -8,7 +7,8 @@ from bot.core.client import Client
 from bot.core.settings import settings
 from bot.handlers.tools import Tools
 from bot.templates.cogs import Cog
-from bot.utils.functions import protected
+from bot.templates.thread import Thread
+from bot.utils.functions import chunker, protected
 
 
 class Spam(Cog):
@@ -34,9 +34,10 @@ class Spam(Cog):
                                         msg))
                         for token in tokens
                         ]
+            for chunk in chunker(tasks):
+                Thread(asyncio.gather, args=[*chunk]).start()
             
-            await asyncio.gather(*tasks)
-            
+
             await ctx.message.add_reaction("<:tiredskull:1195760828134211594>")
         except:
             await ctx.reply("<:tiredskull:1195760828134211594> Error sex")

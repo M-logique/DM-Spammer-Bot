@@ -65,7 +65,7 @@ class Tools:
 
             
         except: return False
-    
+
 
     @staticmethod
     async def send_direct_message(token: str, user: int, message: str):
