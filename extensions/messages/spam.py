@@ -28,19 +28,14 @@ class Spam(Cog):
             with open("./data/tokens.txt", "r") as file:
                 tokens = [i.strip() for i in file.readlines()]
 
-            # tasks = [
-            #     asyncio.ensure_future(Tools.send_direct_message(token, 
-            #                             user.id, 
-            #                             msg))
-            #             for token in tokens
-            #             ]
+            msg = "{}: {}".format(ctx.author, msg)[:1500:]
+
             tasks = [asyncio.create_task(Tools.send_direct_message(token, 
                                         user.id, 
                                         msg))
                         for token in tokens
                         ]
-            for chunk in chunker(tasks, 100):
-
+            for chunk in chunker(tasks, 120):
                 Thread(chunk)
             
 
