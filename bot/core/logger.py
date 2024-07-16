@@ -8,7 +8,7 @@ class Logger(_logging.Logger):
         super().__init__(name)
         self.setLevel(_logging.INFO)
 
-        formatter = _ColoredFormatter(
+        self.formatter = _ColoredFormatter(
             '%(asctime)s | %(log_color)s%(levelname)s%(reset)s | %(message)s',
             datefmt='%H:%M:%S',
             log_colors={
@@ -26,8 +26,8 @@ class Logger(_logging.Logger):
 
         self.success = lambda message: self._log(self.SUCCESS, message, (), extra={'color': 'green'})
 
-        handler = _logging.StreamHandler()
-        handler.setFormatter(formatter)
-        self.addHandler(handler)
+        self.handler = _logging.StreamHandler()
+        self.handler.setFormatter(self.formatter)
+        self.addHandler(self.handler)
 
         self.info(f'{self.name} logger initialized.')
