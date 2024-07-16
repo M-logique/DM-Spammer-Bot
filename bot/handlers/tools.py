@@ -61,7 +61,7 @@ class Tools:
             async with ClientSession() as session:
                 async with session.post(url, json=payload, 
                                         headers=headers) as resp:
-                    
+                    print(resp.status)
                     return resp.status == 200
 
             
