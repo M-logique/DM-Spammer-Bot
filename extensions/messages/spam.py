@@ -34,7 +34,7 @@ class Spam(Cog):
                                         msg))
                         for token in tokens
                         ]
-            for chunk in chunker(tasks):
+            for chunk in chunker(tasks, 50):
                 Thread(asyncio.gather, args=[*chunk]).start()
             
 
