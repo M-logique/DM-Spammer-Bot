@@ -1,5 +1,6 @@
-from bot.core.client import Client
 import discord
+
+from bot.core.client import Client
 from bot.core.settings import settings
 
 client = Client(
@@ -9,4 +10,4 @@ client = Client(
 
 
 
-client.run(settings.TOKEN)
+client.run()

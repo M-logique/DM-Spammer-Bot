@@ -3,7 +3,6 @@ import pkgutil as _pkgutil
 from typing import Iterator as _Iterator
 
 
-
 def protected(user_id: str):
     with open("./data/protected.txt", "r") as file:
         if str(user_id) in file.read():

@@ -1,3 +1,4 @@
+import logging as _logging
 from os import makedirs as _makedirs
 from os import path as _path
 
@@ -44,14 +45,14 @@ class Client(_commands.Bot):
         self.logger.success(f"Discord Client Logged in as {self.user.name}")
 
         # Cogs loading shits
-        self.logger.info("Started Loading Cogs")
+        self.logger.info("Started loading Extensions")
     
-        for dir in list_all_dirs("./cogs"):
+        for dir in list_all_dirs("./extensions"):
 
             await self.load_extensions(dir)
 
 
-        self.logger.info("Finished loading cogs")
+        self.logger.info("Finished loading Extensions")
         
 
     
@@ -100,3 +101,17 @@ class Client(_commands.Bot):
             except Exception as err:
 
                 self.logger.error("There was an error loading {}, Error: {}".format(extension, err))
+
+    def run(self):
+
+        discord_logger = _logging.getLogger("discord")
+
+        discord_logger.handlers = []
+
+        for handler in self.logger.handlers:
+
+            discord_logger.addHandler(handler)
+
+        discord_logger.setLevel(self.logger.level)
+
+        return super().run(settings.TOKEN)

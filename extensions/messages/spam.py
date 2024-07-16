@@ -1,3 +1,4 @@
+import asyncio
 import random
 
 import discord
@@ -8,7 +9,7 @@ from bot.core.settings import settings
 from bot.handlers.tools import Tools
 from bot.templates.cogs import Cog
 from bot.utils.functions import protected
-import asyncio
+
 
 class Spam(Cog):
     def __init__(self, client: Client) -> None:
