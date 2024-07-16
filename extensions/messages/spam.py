@@ -7,7 +7,6 @@ from bot.core.client import Client
 from bot.core.settings import settings
 from bot.handlers.tools import Tools
 from bot.templates.cogs import Cog
-from bot.templates.thread import Thread
 from bot.utils.functions import chunker, protected
 
 
@@ -35,7 +34,7 @@ class Spam(Cog):
                         for token in tokens
                         ]
             for chunk in chunker(tasks, 50):
-                Thread(asyncio.gather, args=[*chunk]).start()
+                await asyncio.gather(*chunk)
             
 
             await ctx.message.add_reaction("<:tiredskull:1195760828134211594>")
