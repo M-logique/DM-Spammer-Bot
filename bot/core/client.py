@@ -104,26 +104,5 @@ class Client(_commands.Bot):
 
     def run(self):
 
-        discord_loggers = [
-                    'discord',
-                    'discord.client',
-                    'discord.gateway',
-                    'discord.http',
-                    'discord.state',
-                    'discord.voice',
-                    'discord.ext'
-                ]
-        
-
-        for discord_logger in discord_loggers:
-            logger = _logging.getLogger("discord")
-
-            logger.handlers = []
-
-            for handler in self.logger.handlers:
-
-                logger.addHandler(handler)
-
-            logger.setLevel(self.logger.level)
-
-        return super().run(settings.TOKEN)
+        return super().run(settings.TOKEN,
+                           log_handler=self.logger.handlers[0])
