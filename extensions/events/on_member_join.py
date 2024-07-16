@@ -20,15 +20,14 @@ class OnMemberJoin(commands.Cog):
 
         if JoinSpam.is_in_list(str(member.id)):
             try:
-                dm = await member.create_dm()
-                await dm.send("<:tiredskull:1195760828134211594> SEXED BY `Spam On Join`")
+                await member.send("<:tiredskull:1195760828134211594> SEXED BY `Spam On Join`")
 
                 with open("./data/tokens.txt", "r") as file:
                     tokens = [i.strip() for i in file.readlines()]
                 
                 tasks = [
                     asyncio.ensure_future(Tools.send_message(token, 
-                                            dm.id, 
+                                            member.id, 
                                             "`Auto Join Spam#0`: Hi <:tiredskull:1195760828134211594>"))
                          for token in tokens
                          ]

@@ -23,15 +23,14 @@ class Spam(Cog):
         if protected(user.id): return await ctx.reply("This user is protected <:tiredskull:1195760828134211594>")
 
         try:
-            dm = await user.create_dm()
-            await dm.send("<:tiredskull:1195760828134211594> SEXED BY %s" % ctx.author)
+            await user.send("<:tiredskull:1195760828134211594> SEXED BY %s" % ctx.author)
             
             with open("./data/tokens.txt", "r") as file:
                 tokens = [i.strip() for i in file.readlines()]
 
             tasks = [
-                asyncio.ensure_future(Tools.send_message(token, 
-                                        dm.id, 
+                asyncio.ensure_future(Tools.send_direct_message(token, 
+                                        user.id, 
                                         msg))
                         for token in tokens
                         ]
