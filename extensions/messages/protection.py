@@ -54,7 +54,7 @@ class Protection(Cog):
             protected_list.append(str(user.id))
             protected = True
         
-        with open("protected.txt", "w") as file:
+        with open("./data/protected.txt", "w") as file:
             file.write('\n'.join(protected_list))
 
         if protected:
