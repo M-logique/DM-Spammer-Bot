@@ -1,6 +1,15 @@
 
 # DM Spammer Discord Bot 
 
+![Build Status](https://img.shields.io/github/workflow/status/M-logique/DM-Spammer-Bot/CI) 
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/M-logique/DM-Spammer-Bot)
+![License](https://img.shields.io/github/license/M-logique/DM-Spammer-Bot)
+![Stars](https://img.shields.io/github/stars/M-logique/DM-Spammer-Bot)
+![Forks](https://img.shields.io/github/forks/M-logique/DM-Spammer-Bot)
+![Languages](https://img.shields.io/github/languages/top/M-logique/DM-Spammer-Bot)
+
+---
+
 A Discord bot for sending a large number of direct messages to someone and trolling your friends. 
 
 This project is written in Python and Golang (for speed and efficiency). 🚀
