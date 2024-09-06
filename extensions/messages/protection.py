@@ -6,6 +6,7 @@ from bot.core.settings import settings
 from bot.templates.cogs import Cog
 from bot.utils.tools import Tools
 
+
 class Protection(Cog):
     def __init__(self, client: Client) -> None:
         self.client = client

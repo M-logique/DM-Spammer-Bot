@@ -1,6 +1,6 @@
 import json
 import sqlite3
-from typing import Any, Dict, Optional, Sequence, Union, Tuple
+from typing import Any, Dict, Optional, Sequence, Tuple, Union
 
 __all__: Tuple[str, ...] = (
     "KVDatabaase"

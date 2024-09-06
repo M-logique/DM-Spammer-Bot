@@ -5,9 +5,10 @@ from discord.ext import commands
 
 from bot.core.client import Client
 from bot.core.settings import settings
-from bot.utils.tools import Tools
 from bot.templates.cogs import Cog
 from bot.templates.embeds import ErrorEmbed
+from bot.utils.tools import Tools
+
 
 class Spam(Cog):
     def __init__(self, client: Client) -> None:

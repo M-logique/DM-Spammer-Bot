@@ -2,7 +2,6 @@ import os
 import random
 from ctypes import CDLL, c_char_p
 
-
 spammer = CDLL("./shared/spammer.so")
 spammer.SendDirectMessages.argtypes = [c_char_p, c_char_p]
 

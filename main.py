@@ -1,8 +1,6 @@
-from discord import Intents, AllowedMentions
+from discord import AllowedMentions, Intents
 
 from bot.core.client import Client
-
-
 
 if __name__ == "__main__":
     client = Client(

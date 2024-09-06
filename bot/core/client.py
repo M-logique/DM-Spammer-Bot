@@ -1,4 +1,5 @@
 from logging import getLogger
+from typing import Tuple
 
 from discord import Activity as _Activity
 from discord import ActivityType as _ActivityType
@@ -8,9 +9,9 @@ from discord.ext import commands as _commands
 
 from ..templates.embeds import ErrorEmbed
 from ..utils.functions import list_all_dirs, search_directory
+from ..utils.kvdatabse import KVDatabase
 from .logger import Logger as _Logger
 from .settings import settings
-from ..utils.kvdatabse import *
 
 
 class Client(_commands.Bot):
@@ -28,7 +29,7 @@ class Client(_commands.Bot):
         **options
     ):
 
-        self.logger = _Logger("bot")
+        self.logger = _Logger("bot", level="INFO")
 
         owner_ids = settings.OWNERS
         prefix = settings.PREFIX
@@ -50,7 +51,7 @@ class Client(_commands.Bot):
         await self.change_presence(activity=_Activity(type=_ActivityType.streaming, url="https://twitch.tv/discord", name="github.com/M-logique/DM-Spammer-Bot"))
         if self.cogs != {}: return self.logger.warn("Skipped loading cogs: Reconnecting")
 
-        self.logger.success(f"Discord Client Logged in as {self.user.name}")
+        self.logger.info(f"Discord Client Logged in as {self.user.name}")
 
         # Cogs loading shits
         self.logger.info("Started loading Extensions")

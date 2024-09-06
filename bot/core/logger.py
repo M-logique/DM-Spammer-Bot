@@ -1,7 +1,8 @@
 import logging as _logging
+from typing import Union
 
 from colorlog import ColoredFormatter as _ColoredFormatter
-from typing import Union
+
 
 class Logger(_logging.Logger):
     def __init__(self, name: str, level: Union[int, str]):
