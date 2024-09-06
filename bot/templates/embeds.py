@@ -6,18 +6,17 @@ from discord import Embed as _Embed
 
 
 class ErrorEmbed(_Embed):
-
+    """A shitty embed for displaying errors"""
 
     def __init__(self, error: str,
                 *args: _Any, 
                 **kwgrs: _Any) -> None:
 
 
-        super().__init__(title="We Got an Error!",
-                        color=_Color.from_rgb(255, 3, 7),
-                        description="⚠️ {}".format(error),
-                        timestamp=_datetime.now(),
-                        *args, 
-                        **kwgrs
-                    )
+        super().__init__(
+            description=":x: {}".format(error),
+            color=_Color.red(),
+            *args, 
+            **kwgrs
+        )
 

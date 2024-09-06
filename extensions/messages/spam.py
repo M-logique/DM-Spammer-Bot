@@ -5,11 +5,9 @@ from discord.ext import commands
 
 from bot.core.client import Client
 from bot.core.settings import settings
-from bot.handlers.tools import Tools
+from bot.utils.tools import Tools
 from bot.templates.cogs import Cog
-from bot.templates.thread import Thread
-from bot.utils.functions import chunker, protected
-
+from bot.templates.embeds import ErrorEmbed
 
 class Spam(Cog):
     def __init__(self, client: Client) -> None:
@@ -18,26 +16,25 @@ class Spam(Cog):
     @commands.command(name="spam")
     @commands.cooldown(1, 10, commands.BucketType.member)
     async def _spam(self, ctx: commands.Context, user: discord.Member, *, msg: str = "Sex 😳"):
-        if ctx.channel.id != settings.COMMANDS_CHANNEL: return await ctx.reply("The commands are only available at <#%s>" % settings.COMMANDS_CHANNEL)
+        if ctx.channel.id != settings.COMMANDS_CHANNEL:
+            return await ctx.reply(
+                embed=ErrorEmbed("The commands are only available at <#%s>" % settings.COMMANDS_CHANNEL)
+            )
 
-        if protected(user.id): return await ctx.reply("This user is protected <:tiredskull:1195760828134211594>")
+
+        protected = self.client.db.get(f"{ctx.author.id}.protected")
+
+        if protected: 
+            return await ctx.reply("This user is protected <:tiredskull:1195760828134211594>")
 
         try:
-            await user.send("<:tiredskull:1195760828134211594> SEXED BY %s" % ctx.author)
+            await user.send("🥱 SEXED BY %s" % ctx.author)
             
-            with open("./data/tokens.txt", "r") as file:
-                tokens = [i.strip() for i in file.readlines()]
+
 
             msg = "{}: {}".format(ctx.author, msg)[:1500:]
 
-            tasks = [asyncio.create_task(Tools.send_direct_message(token, 
-                                        user.id, 
-                                        msg))
-                        for token in tokens
-                        ]
-            for chunk in chunker(tasks, 120):
-                Thread(chunk)
-            
+            Tools.send_direct_message(user.id, msg)
 
             await ctx.message.add_reaction("<:tiredskull:1195760828134211594>")
         except:

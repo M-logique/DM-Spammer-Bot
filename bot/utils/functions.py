@@ -3,26 +3,6 @@ import pkgutil as _pkgutil
 from typing import Iterator as _Iterator
 
 
-def protected(user_id: str):
-    with open("./data/protected.txt", "r") as file:
-        if str(user_id) in file.read():
-            return True
-        
-        return False
-    
-
-
-def chunker(text, chunk_size: int) -> list:
-    length = len(text)
-    num = 0
-    chunks = []
-
-    while num < len(text):
-        chunks.append(text[num:length-(length-(chunk_size))+num:])
-        num+=chunk_size
-
-    return chunks
-
 def list_all_dirs(root_dir):
     """
     List all directories in the given root directory and its subdirectories.

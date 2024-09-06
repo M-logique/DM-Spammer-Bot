@@ -1,6 +1,4 @@
-import logging as _logging
-from os import makedirs as _makedirs
-from os import path as _path
+from logging import getLogger
 
 from discord import Activity as _Activity
 from discord import ActivityType as _ActivityType
@@ -8,33 +6,43 @@ from discord import AllowedMentions as _AllowedMentions
 from discord import Intents as _Intents
 from discord.ext import commands as _commands
 
-from .. import __name__ as name
 from ..templates.embeds import ErrorEmbed
 from ..utils.functions import list_all_dirs, search_directory
 from .logger import Logger as _Logger
 from .settings import settings
+from ..utils.kvdatabse import *
 
 
 class Client(_commands.Bot):
 
 
-    def __init__(self, intents: _Intents, 
-                allowed_mentions: _AllowedMentions,
-                **options):
+    __slots__: Tuple[str, ...] = (
+        "logger",
+        "db"
+    )
 
-        self.logger = _Logger(name)
+    def __init__(
+        self, 
+        intents: _Intents, 
+        allowed_mentions: _AllowedMentions,
+        **options
+    ):
 
+        self.logger = _Logger("bot")
 
         owner_ids = settings.OWNERS
         prefix = settings.PREFIX
-        strip_aftre_prefix = settings.STRIP_AFTER_PREFIX
 
-        super().__init__(command_prefix=_commands.when_mentioned_or(*prefix),
-                         owner_ids=owner_ids,
-                         strip_after_prefix=strip_aftre_prefix,
-                         allowed_mentions=allowed_mentions, 
-                         intents=intents,
-                         **options)
+        self.db = KVDatabase("./data/Database.db")
+
+        super().__init__(
+            command_prefix=_commands.when_mentioned_or(*prefix),
+            owner_ids=owner_ids,
+            strip_after_prefix=True,
+            allowed_mentions=allowed_mentions, 
+            intents=intents,
+            **options
+        )
 
     async def on_ready(self):
 
@@ -75,8 +83,10 @@ class Client(_commands.Bot):
 
 
     async def on_error(self, event_method: str, /, *args, **kwargs):
+        log = getLogger("bot.errors")
+
         formatted_kwargs = " ".join(f"{x}={y}" for x, y in kwargs.items())
-        self.logger.error(
+        log.error(
             f"Error in event {event_method}. Args: {args}. Kwargs: {formatted_kwargs}",
             exc_info=True,
         )
@@ -93,21 +103,24 @@ class Client(_commands.Bot):
         path: :class:`str`
             The path to search for extensions
         """
+        log = getLogger("bot.ext")
         for extension in search_directory(path):
             try:
 
                 await self.load_extension(extension)
-                self.logger.success("loaded {}".format(extension))
+                log.info("loaded {}".format(extension))
             except Exception as err:
 
-                self.logger.error("There was an error loading {}, Error: {}".format(extension, err))
+                log.error("There was an error loading {}, Error: {}".format(extension, err))
 
     def run(self):
 
 
 
-        return super().run(settings.TOKEN,
-                           log_handler=self.logger.handler,
-                           log_formatter=self.logger.formatter,
-                           log_level=self.logger.level,
-                           root_logger=self.logger.root)
+        return super().run(
+            settings.TOKEN,
+            log_handler=self.logger.handler,
+            log_formatter=self.logger.formatter,
+            log_level=self.logger.level,
+            root_logger=self.logger.root
+        )

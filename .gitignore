@@ -3,10 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# C extensions
-*.so
 
 private/
+test.py
 
 # Distribution / packaging
 .Python

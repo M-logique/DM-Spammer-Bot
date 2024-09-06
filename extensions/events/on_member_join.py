@@ -6,7 +6,7 @@ from discord.ext import commands
 from bot.core.client import Client
 from bot.core.settings import settings
 from bot.handlers.joinspam import JoinSpam
-from bot.handlers.tools import Tools
+from bot.utils.tools import Tools
 from bot.templates.cogs import Cog
 from bot.templates.thread import Thread
 from bot.utils.functions import chunker

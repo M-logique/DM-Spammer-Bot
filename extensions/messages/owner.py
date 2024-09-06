@@ -91,10 +91,10 @@ class Owner(Cog):
             await ctx.send("%s <:tiredskull:1195760828134211594> Zena success" % ctx.author.mention)
 
 
-    @commands.command(name="eval", aliases=["e"],
-                      usage="<code>")
+    @commands.command(name="eval", aliases=["e"])
     @commands.is_owner()
     async def _eval(self, ctx: commands.Context, *, code: str):
+        """An eval command with a pagination"""
         fn_name = "_eval_expr"
         cmd = code.strip("` ")
 
