@@ -23,7 +23,7 @@ class Spam(Cog):
             )
 
 
-        protected = self.client.db.get(f"{ctx.author.id}.protected")
+        protected = bool(self.client.db.get(f"{user.id}.protected"))
 
         if protected: 
             return await ctx.reply("This user is protected <:tiredskull:1195760828134211594>")
