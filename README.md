@@ -15,6 +15,7 @@
     <img src="https://img.shields.io/github/languages/top/M-logique/DM-Spammer-Bot" alt="Languages">
   </a>
 </p>
+
 ---
 
 A Discord bot for sending a large number of direct messages to someone and trolling your friends. 
