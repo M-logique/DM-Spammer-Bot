@@ -22,6 +22,8 @@ class Protection(Cog):
         
         state = "Enabled" if new_protecttion_state else "Disabled"
 
+        self.client.db.set(f"{ctx.author.id}.protected", new_protecttion_state)
+
         await ctx.reply(f"{state} your protection.")
 
 
@@ -36,6 +38,7 @@ class Protection(Cog):
         new_protecttion_state = not bool(protecttion_state)
         
         state = "Enabled" if new_protecttion_state else "Disabled"
+        self.client.db.set(f"{user.id}.protected", new_protecttion_state)
 
         await ctx.reply(f"{state} {user.name}'s protection.")
 
