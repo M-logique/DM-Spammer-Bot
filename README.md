@@ -1,13 +1,20 @@
 
 # DM Spammer Discord Bot 
 
-![Build Status](https://img.shields.io/github/workflow/status/M-logique/DM-Spammer-Bot/CI) 
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/M-logique/DM-Spammer-Bot)
-![License](https://img.shields.io/github/license/M-logique/DM-Spammer-Bot)
-![Stars](https://img.shields.io/github/stars/M-logique/DM-Spammer-Bot)
-![Forks](https://img.shields.io/github/forks/M-logique/DM-Spammer-Bot)
-![Languages](https://img.shields.io/github/languages/top/M-logique/DM-Spammer-Bot)
-
+<p align="center">
+  <a href="https://opensource.org/licenses/MIT">
+    <img src="https://img.shields.io/github/license/M-logique/DM-Spammer-Bot" alt="License">
+  </a>
+  <a href="https://github.com/M-logique/DM-Spammer-Bot/stargazers">
+    <img src="https://img.shields.io/github/stars/M-logique/DM-Spammer-Bot" alt="Stars">
+  </a>
+  <a href="https://github.com/M-logique/DM-Spammer-Bot/network/members">
+    <img src="https://img.shields.io/github/forks/M-logique/DM-Spammer-Bot" alt="Forks">
+  </a>
+  <a href="https://github.com/M-logique/DM-Spammer-Bot">
+    <img src="https://img.shields.io/github/languages/top/M-logique/DM-Spammer-Bot" alt="Languages">
+  </a>
+</p>
 ---
 
 A Discord bot for sending a large number of direct messages to someone and trolling your friends. 
