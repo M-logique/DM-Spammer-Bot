@@ -139,12 +139,12 @@ func SendDirectMessages(userID *C.char, message *C.char) {
 	for _, token := range tokens {
 		wg.Add(1)
 		go func(t string) {
-			defer wg.Done()
 			tools := &Tools{Token: t}
 			_, err := tools.createDMAndSendMessage(goUserID, goMessage)
 			if err != nil {
 				fmt.Printf("There was an error sending dm to %s with the token %s: %s", goUserID, t, err)
 			}
+			defer wg.Done()
 
 		}(token)
 	}

@@ -5,8 +5,7 @@ __pycache__/
 
 
 private/
-test.py
-
+test.*
 # Distribution / packaging
 .Python
 build/
