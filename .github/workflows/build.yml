@@ -21,9 +21,7 @@ jobs:
     - name: Build Go shared library (.dll)
       run: |
         cd go_spammer
-        go build -o spammer.dll -buildmode=c-shared main.go
-        mkdir -p ../shared
-        mv spammer.dll ../shared/spammer.dll
+        go build -o ../shared/spammer.dll -buildmode=c-shared main.go
 
     - name: Commit and push changes
       run: |
@@ -54,9 +52,7 @@ jobs:
     - name: Build Go shared library (.so)
       run: |
         cd go_spammer
-        go build -o spammer.so -buildmode=c-shared main.go
-        mkdir -p ../shared
-        mv spammer.so ../shared/spammer.so
+        go build -o ../shared/spammer.so -buildmode=c-shared main.go
 
     - name: Commit and push changes
       run: |
