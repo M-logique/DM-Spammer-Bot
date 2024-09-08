@@ -1,5 +1,5 @@
 
-# DM Spammer Discord Bot 
+<h1 align="center">DM Spammer Discord Bot</h1>
 
 <p align="center">
   <a href="https://opensource.org/licenses/MIT">
