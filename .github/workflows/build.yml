@@ -24,13 +24,11 @@ jobs:
         go build -o spammer.dll -buildmode=c-shared main.go
         mv spammer.dll ../shared/spammer.dll
 
-    - name: Commit and push changes
+    - name: Check for changes and commit
       run: |
         git config --global user.email "your-email@example.com"
         git config --global user.name "GitHub Actions"
-        git add shared/spammer.dll
-        git commit -m "Add built spammer.dll for Windows"
-        git push
+        git diff --exit-code || (git add shared/spammer.dll && git commit -m "Add built spammer.dll for Windows" && git push)
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -56,12 +54,10 @@ jobs:
         go build -o spammer.so -buildmode=c-shared main.go
         mv spammer.so ../shared/spammer.so
 
-    - name: Commit and push changes
+    - name: Check for changes and commit
       run: |
         git config --global user.email "your-email@example.com"
         git config --global user.name "GitHub Actions"
-        git add shared/spammer.so
-        git commit -m "Add built spammer.so for Linux"
-        git push
+        git diff --exit-code || (git add shared/spammer.so && git commit -m "Add built spammer.so for Linux" && git push)
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
