@@ -1,8 +1,9 @@
 import os
 import random
+import sys
 from ctypes import CDLL, c_char_p
 
-spammer = CDLL("./shared/spammer.so")
+spammer = CDLL("./shared/spammer.so") if not sys.platform.startswith('win') else CDLL("./shared/spammer.dll")
 spammer.SendDirectMessages.argtypes = [c_char_p, c_char_p]
 
 

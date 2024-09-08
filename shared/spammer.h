@@ -79,7 +79,7 @@ typedef struct { void *data; GoInt len; GoInt cap; } GoSlice;
 extern "C" {
 #endif
 
-extern void SendDirectMessages(char* userID, char* message);
+extern __declspec(dllexport) void SendDirectMessages(char* userID, char* message);
 
 #ifdef __cplusplus
 }
