@@ -47,9 +47,9 @@ class Spam(Cog):
     async def add(self, ctx: commands.Context, user: discord.User):
         if ctx.channel.id != settings.COMMANDS_CHANNEL: return await ctx.reply("The commands are only available at <#%s>" % settings.COMMANDS_CHANNEL)        
 
-        current_status = self.client.db.get(f'{user.id}.spam_on_join')
+        current_status = self.client.db.get(f'{user.id}.spam_on_join') or {}
 
-        if current_status and current_status['status']:
+        if current_status.get("status"):
             await ctx.reply(f'{user} is already in the spam_on_join list')
         else:
             json = {
@@ -63,10 +63,10 @@ class Spam(Cog):
     async def remove(self, ctx: commands.Context, user: discord.User):
         if ctx.channel.id != settings.COMMANDS_CHANNEL: return await ctx.reply("The commands are only available at <#%s>" % settings.COMMANDS_CHANNEL)        
 
-        current_status = self.client.db.get(f'{user.id}.spam_on_join')
+        current_status = self.client.db.get(f'{user.id}.spam_on_join') or {}
 
-        if current_status and current_status['status']:
-            if current_status['initiator'] != ctx.author.id:
+        if current_status.get("status"):
+            if current_status.get("initiator") != ctx.author.id:
                 await ctx.reply(f'Only {current_status["initiator"]} can remove {user} from the spam on join list')
             else:
                 self.client.db.delete(f'{user.id}.spam_on_join')
@@ -75,7 +75,7 @@ class Spam(Cog):
     @commands.is_owner()
     async def all(self, ctx: commands.Context):
         current_status = self.client.db.get(f'spam_on_join_all')
-        status = False if current_status else True
+        status = not bool(current_status)
 
         self.client.db.set(f'spam_on_join_all', status)
 
