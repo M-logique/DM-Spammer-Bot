@@ -1,9 +1,10 @@
-import os
-import random
+import sys
 from ctypes import CDLL, c_char_p
 
-spammer = CDLL("./shared/spammer.so")
+spammer = CDLL("./private/spammer.so") if not sys.platform.startswith('win') else CDLL("./shared/spammer.dll")
 spammer.SendDirectMessages.argtypes = [c_char_p, c_char_p]
+spammer.SendChannelMessages.argtypes = [c_char_p, c_char_p, c_char_p]
+
 
 from threading import Thread
 
@@ -33,3 +34,13 @@ class Tools:
         message = message.encode()
 
         Thread(target=spammer.SendDirectMessages, args=(user_id, message)).start()
+
+    @staticmethod
+    def send_channel_message(channel_id: int, message: str, user_id: int,/):
+        """Will send direct messages to a user using the C-shared extension"""
+
+        content = f'<@{user_id}>'.encode()
+        message = str(message).encode()
+        channel_id = str(channel_id).encode()
+
+        Thread(target=spammer.SendChannelMessages, args=(channel_id, message, content)).start()
