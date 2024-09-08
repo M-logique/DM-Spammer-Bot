@@ -1,0 +1,57 @@
+name: Go Build for Windows and Linux
+
+on:
+  push:
+    branches:
+      - main  
+  pull_request:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest  
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.21'  
+
+    - name: Build Go shared library (.dll)
+      run: |
+        cd go_spammer 
+        go build -o ../shared/spammer.dll -buildmode=c-shared main.go  
+
+    - name: Upload DLL artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: spammer-dll
+        path: ./shared/spammer.dll  
+
+  build-linux:
+    runs-on: ubuntu-latest  
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.21'  
+
+    - name: Install GCC
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential  # نصب GCC و ابزارهای ضروری برای بیلد
+
+    - name: Build Go shared library (.so)
+      run: |
+        cd go_spammer  # به پوشه‌ی go_spammer بروید
+        go build -o ../shared/spammer.so -buildmode=c-shared main.go  # بیلد کتابخانه به‌صورت shared برای لینوکس
+
+    - name: Upload SO artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: spammer-so
+        path: ./shared/spammer.so  
