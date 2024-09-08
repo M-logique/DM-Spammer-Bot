@@ -21,13 +21,15 @@ jobs:
     - name: Build Go shared library (.dll)
       run: |
         cd go_spammer
-        go build -o ../shared/spammer.dll -buildmode=c-shared main.go
+        go build -o spammer.dll -buildmode=c-shared main.go
+        mkdir -p ../shared
+        mv spammer.dll ../shared/spammer.dll
 
     - name: Commit and push changes
       run: |
         git config --global user.email "your-email@example.com"
         git config --global user.name "GitHub Actions"
-        git add ../shared/spammer.dll
+        git add shared/spammer.dll
         git commit -m "Add built spammer.dll for Windows"
         git push
       env:
@@ -52,13 +54,15 @@ jobs:
     - name: Build Go shared library (.so)
       run: |
         cd go_spammer
-        go build -o ../shared/spammer.so -buildmode=c-shared main.go
+        go build -o spammer.so -buildmode=c-shared main.go
+        mkdir -p ../shared
+        mv spammer.so ../shared/spammer.so
 
     - name: Commit and push changes
       run: |
         git config --global user.email "your-email@example.com"
         git config --global user.name "GitHub Actions"
-        git add ../shared/spammer.so
+        git add shared/spammer.so
         git commit -m "Add built spammer.so for Linux"
         git push
       env:
