@@ -49,12 +49,12 @@ class Protection(Cog):
     async def _unprotected(self, ctx: commands.Context):
         """Displays a list of unprotected users in the ctx.guild (Admin only)"""
         
-        protected = lambda user_id, /: bool(self.client.db.get(f"{user_id}.protected"))
+        protected = lambda user, /: bool(self.client.db.get(f"{user.id}.protected")) and not user.bot
 
         unprotected = [
             f"{i.name} - {i.id}"
             for i in ctx.guild.members
-            if not protected(i.id)
+            if not protected(i)
         ]
 
 
@@ -70,12 +70,12 @@ class Protection(Cog):
     async def _protected(self, ctx: commands.Context):
         """Displays a list of protected users in the ctx.guild (Admin only)"""
         
-        protected = lambda user_id, /: bool(self.client.db.get(f"{user_id}.protected"))
+        protected = lambda user, /: bool(self.client.db.get(f"{user.id}.protected")) and not user.bot
 
         unprotected = [
             f"{i.name} - {i.id}"
             for i in ctx.guild.members
-            if protected(i.id)
+            if protected(i)
         ]
 
 
