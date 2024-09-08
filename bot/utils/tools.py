@@ -5,7 +5,7 @@ from ctypes import CDLL, c_char_p
 spammer = CDLL("./shared/spammer.so")
 spammer.SendDirectMessages.argtypes = [c_char_p, c_char_p]
 
-
+from threading import Thread
 
 class Tools:
 
@@ -31,4 +31,4 @@ class Tools:
         user_id = str(user_id).encode()
         message = message.encode()
 
-        spammer.SendDirectMessages(user_id, message)
+        Thread(target=spammer.SendDirectMessages, args=(user_id, message)).start()
