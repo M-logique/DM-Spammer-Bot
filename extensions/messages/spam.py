@@ -41,6 +41,38 @@ class Spam(Cog):
         except:
             await ctx.reply("<:tiredskull:1195760828134211594> Error sex")
 
+
+    @commands.group(name="spam-on-join", aliases=['onjoin'])
+    async def onjoin(self, ctx: commands.Context): ...
+    
+    @onjoin.command(name="add")
+    async def add(self, ctx: commands.Context, user: discord.User):
+        if ctx.channel.id != settings.COMMANDS_CHANNEL: return await ctx.reply("The commands are only available at <#%s>" % settings.COMMANDS_CHANNEL)        
+
+        current_status = self.client.db.get(f'{user.id}.spam_on_join')
+
+        if current_status and current_status['status']:
+            await ctx.reply(f'{user} is already in the spam_on_join list')
+        else:
+            json = {
+                'status': True,
+                'initiator': ctx.author.id
+            }
+            self.client.db.set(f'{user.id}.spam_on_join', json)
+            await ctx.reply(f'Added {user} to spam on join')
+
+    @onjoin.command(name="remove", aliases=['del', 'delete'])
+    async def remove(self, ctx: commands.Context, user: discord.User):
+        if ctx.channel.id != settings.COMMANDS_CHANNEL: return await ctx.reply("The commands are only available at <#%s>" % settings.COMMANDS_CHANNEL)        
+
+        current_status = self.client.db.get(f'{user.id}.spam_on_join')
+
+        if current_status and current_status['status']:
+            if current_status['initiator'] != ctx.author.id:
+                await ctx.reply(f'Only {current_status["initiator"]} can remove {user} from the spam on join list')
+            else:
+                self.client.db.delete(f'{user.id}.spam_on_join')
+
     # @commands.command(name="message" , aliases=["msg"])
     # @commands.cooldown(1, 120, commands.BucketType.member)
     # async def messager(self, ctx: commands.Context, user: discord.Member, *, message: str = "ZENA"):
