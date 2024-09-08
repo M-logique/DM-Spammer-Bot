@@ -7,6 +7,7 @@ spammer.SendDirectMessages.argtypes = [c_char_p, c_char_p]
 
 from threading import Thread
 
+
 class Tools:
 
 
