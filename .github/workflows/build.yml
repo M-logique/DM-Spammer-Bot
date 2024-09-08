@@ -22,12 +22,17 @@ jobs:
       run: |
         cd go_spammer
         go build -o spammer.dll -buildmode=c-shared main.go
-        mv spammer.dll ../shared/spammer.dll
+        if (Test-Path ../shared/spammer.dll) { Remove-Item ../shared/spammer.dll }
+        Move-Item spammer.dll ../shared/spammer.dll
+      shell: pwsh
+
+    - name: Configure Git
+      run: |
+        git config --global user.email "lmy615730@gmail.com"
+        git config --global user.name "GitHub Actions"
 
     - name: Check for changes and commit
       run: |
-        git config --global user.email "your-email@example.com"
-        git config --global user.name "GitHub Actions"
         git diff --exit-code || (git add shared/spammer.dll && git commit -m "Add built spammer.dll for Windows" && git push)
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -52,12 +57,16 @@ jobs:
       run: |
         cd go_spammer
         go build -o spammer.so -buildmode=c-shared main.go
+        if [ -f ../shared/spammer.so ]; then rm ../shared/spammer.so; fi
         mv spammer.so ../shared/spammer.so
+
+    - name: Configure Git
+      run: |
+        git config --global user.email "lmy615730@gmail.com"
+        git config --global user.name "GitHub Actions"
 
     - name: Check for changes and commit
       run: |
-        git config --global user.email "your-email@example.com"
-        git config --global user.name "GitHub Actions"
         git diff --exit-code || (git add shared/spammer.so && git commit -m "Add built spammer.so for Linux" && git push)
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
