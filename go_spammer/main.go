@@ -194,9 +194,8 @@ func SendDirectMessages(userID *C.char, message *C.char) {
 func randomChannelID(channelIDs string) string {
 
 	splitChannels := strings.Split(channelIDs, ",")
-	
-	rand.Seed(time.Now().UnixNano())
 
+	rand.Seed(time.Now().UnixNano())
 	randomIndex := rand.Intn(len(splitChannels))
 
 	return splitChannels[randomIndex]
@@ -219,10 +218,10 @@ func SendChannelMessages(channelIDs *C.char, message *C.char, content *C.char) {
 		go func(t string) {
 			defer wg.Done()
 			tools := &Tools{Token: t}
-			randomChannel := randomChannelID(goChannelIDs)
-			_, err := tools.sendMessageEmbed(randomChannel, goMessage, goContent)
+			goRandomChannel := randomChannelID(goChannelIDs)
+			_, err := tools.sendMessageEmbed(goRandomChannel, goMessage, goContent)
 			if err != nil {
-				fmt.Printf("There was an error sending message to %s with the token %s: %s\n", randomChannel, t, err)
+				fmt.Printf("There was an error sending message to %s with the token %s: %s\n", goRandomChannel, t, err)
 			}
 
 		}(token)
