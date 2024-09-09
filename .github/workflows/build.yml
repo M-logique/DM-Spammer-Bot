@@ -33,9 +33,11 @@ jobs:
 
     - name: Check for changes and commit
       run: |
-        git stash
+        if (-not (git diff --quiet)) { git stash }
+
         git pull --rebase
-        git stash pop
+        if (git stash list | Select-String 'stash@{0}') { git stash pop }
+        
         git diff --exit-code || (git add shared/spammer.dll && git commit -m "Add built spammer.dll for Windows" && git push)
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -70,9 +72,13 @@ jobs:
 
     - name: Check for changes and commit
       run: |
-        git stash
+        if ! git diff --quiet; then git stash; fi
+
         git pull --rebase
-        git stash pop
+
+        if git stash list | grep -q 'stash@{0}'; then git stash pop; fi
+
+
         git diff --exit-code || (git add shared/spammer.so && git commit -m "Add built spammer.so for Linux" && git push)
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
