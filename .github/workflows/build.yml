@@ -33,6 +33,7 @@ jobs:
 
     - name: Check for changes and commit
       run: |
+        git pull --rebase
         git diff --exit-code || (git add shared/spammer.dll && git commit -m "Add built spammer.dll for Windows" && git push)
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -67,6 +68,7 @@ jobs:
 
     - name: Check for changes and commit
       run: |
+        git pull --rebase
         git diff --exit-code || (git add shared/spammer.so && git commit -m "Add built spammer.so for Linux" && git push)
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
