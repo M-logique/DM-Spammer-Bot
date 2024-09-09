@@ -28,7 +28,7 @@ class Tools:
 
     @staticmethod
     def send_direct_message(user_id: int, message: str, /):
-        """Will send direct messages to a user using the C-shared extension"""
+        """Will send direct messages to a user using the C-shared extension."""
 
         user_id = str(user_id).encode()
         message = message.encode()
@@ -37,7 +37,7 @@ class Tools:
 
     @staticmethod
     def send_channel_message(channel_ids: str, message: str, user_id: int,/):
-        """Will send messages to random chosen channel ids using the C-shared extension"""
+        """Will send messages to random chosen channel ids using the C-shared extension."""
 
         content = f'<@{user_id}>'.encode()
         message = str(message).encode()
