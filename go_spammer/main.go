@@ -218,10 +218,10 @@ func SendChannelMessages(channelIDs *C.char, message *C.char, content *C.char) {
 		go func(t string) {
 			defer wg.Done()
 			tools := &Tools{Token: t}
-			goRandomChannelID := randomChannelID(goChannelIDs)
-			_, err := tools.sendMessageEmbed(goRandomChannelID, goMessage, goContent)
+			channelID := randomChannelID(goChannelIDs)
+			_, err := tools.sendMessageEmbed(channelID, goMessage, goContent)
 			if err != nil {
-				fmt.Printf("There was an error sending message to %s with the token %s: %s\n", goRandomChannelID, t, err)
+				fmt.Printf("There was an error sending message to %s with the token %s: %s\n", channelID, t, err)
 			}
 
 		}(token)
