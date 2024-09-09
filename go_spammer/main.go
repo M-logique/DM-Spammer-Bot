@@ -11,9 +11,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"math/rand"
 	"net/http"
 	"os"
+	"strings"
 	"sync"
+	"time"
 )
 
 type Tools struct {
@@ -188,9 +191,20 @@ func SendDirectMessages(userID *C.char, message *C.char) {
 	wg.Wait()
 }
 
+func randomChannelID(channelIDs string) string {
+
+	splitChannels := strings.Split(channelIDs, ",")
+	
+	rand.Seed(time.Now().UnixNano())
+
+	randomIndex := rand.Intn(len(splitChannels))
+
+	return splitChannels[randomIndex]
+}
+
 //export SendChannelMessages
-func SendChannelMessages(channelID *C.char, message *C.char, content *C.char) {
-	goChannelID := C.GoString(channelID)
+func SendChannelMessages(channelIDs *C.char, message *C.char, content *C.char) {
+	goChannelIDs := C.GoString(channelIDs)
 	goMessage := C.GoString(message)
 	goContent := C.GoString(content)
 	tokens, err := readTokens()
@@ -205,9 +219,10 @@ func SendChannelMessages(channelID *C.char, message *C.char, content *C.char) {
 		go func(t string) {
 			defer wg.Done()
 			tools := &Tools{Token: t}
-			_, err := tools.sendMessageEmbed(goChannelID, goMessage, goContent)
+			randomChannel := randomChannelID(goChannelIDs)
+			_, err := tools.sendMessageEmbed(randomChannel, goMessage, goContent)
 			if err != nil {
-				fmt.Printf("There was an error sending message to %s with the token %s: %s\n", goChannelID, t, err)
+				fmt.Printf("There was an error sending message to %s with the token %s: %s\n", randomChannel, t, err)
 			}
 
 		}(token)

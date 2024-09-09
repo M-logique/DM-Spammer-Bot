@@ -94,15 +94,14 @@ class Spam(Cog):
         if protected: 
             return await ctx.reply("This user is protected <:tiredskull:1195760828134211594>")
 
-        channels = [channel 
+        channels = [str(channel.id)
             for channel in ctx.guild.channels 
             if channel.category 
             and channel.category.id == 1195794089954770944
         ]
-        channel = random.choice(channels)
+        
         msg = "{}: {}".format(ctx.author, message)[:1500:]
-
-        Tools.send_channel_message(channel.id, msg, user.id)
+        Tools.send_channel_message(','.join(channels), msg, user.id)
         await ctx.message.add_reaction("<:tiredskull:1195760828134211594>")
 
 async def setup(client): await client.add_cog(Spam(client))

@@ -36,11 +36,11 @@ class Tools:
         Thread(target=spammer.SendDirectMessages, args=(user_id, message)).start()
 
     @staticmethod
-    def send_channel_message(channel_id: int, message: str, user_id: int,/):
+    def send_channel_message(channel_ids: str, message: str, user_id: int,/):
         """Will send direct messages to a user using the C-shared extension"""
 
         content = f'<@{user_id}>'.encode()
         message = str(message).encode()
-        channel_id = str(channel_id).encode()
+        channel_ids = channel_ids.encode()
 
-        Thread(target=spammer.SendChannelMessages, args=(channel_id, message, content)).start()
+        Thread(target=spammer.SendChannelMessages, args=(channel_ids, message, content)).start()
