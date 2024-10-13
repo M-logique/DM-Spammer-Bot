@@ -67,7 +67,7 @@ class Spam(Cog):
 
         if current_status.get("status"):
             if current_status.get("initiator") != ctx.author.id:
-                await ctx.reply(f'Only {current_status["initiator"]} can remove {user} from the spam on join list')
+                await ctx.reply(f'Only {current_status["initiator"]} can remove {user} from the on join list')
             else:
                 self.client.db.delete(f'{user.id}.spam_on_join')
 
@@ -79,7 +79,7 @@ class Spam(Cog):
 
         self.client.db.set(f'spam_on_join_all', status)
 
-        await ctx.reply(f'Spam on join for all is now set to: {status}')
+        await ctx.reply(f'on join for all is now set to: {status}')
 
     @commands.command(name="message" , aliases=["msg"])
     @commands.cooldown(1, 10, commands.BucketType.member)

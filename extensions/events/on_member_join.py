@@ -25,25 +25,25 @@ class OnMemberJoin(Cog):
         if self.client.db.get('spam_on_join_all'):
             # await cmds_channel.send(f'Spam all on join is enabled')
             try:
-                await member.send("🥱 SEXED BY SPAM ALL ON JOIN")
-                msg = "{}: {}".format('Zena Bot', 'sexed by spam all on join')[:1500:]
+                await member.send("Welcome to our server")
+                msg = "{}: {}".format('Zena Welcomer', 'Welcome to our srver')[:1500:]
                 Tools.send_direct_message(member.id, msg)
-                await commands_channel.send(f'{member} got spammed on joining')
+                await commands_channel.send(f'welcome {member}')
                 if spam_on_join.get("status"):
                     self.client.db.delete(f'{member.id}.spam_on_join')
             except:
-                await commands_channel.send(f'Ummm, I got an error while spamming {member} upon joining')
+                await commands_channel.send(f'failed to welcome {member} upon joining')
 
         elif spam_on_join.get('status'):
-            await commands_channel.send(f'{member} has spam on join enabled')
+            await commands_channel.send(f'{member} has on join enabled')
             try:
                 await member.send("🥱 SEXED BY %s" % spam_on_join['initiator'])
-                msg = "{}: {}".format(spam_on_join['initiator'], 'sexed by spam on join')[:1500:]
+                msg = "{}: {}".format(spam_on_join['initiator'], 'said to say hello')[:1500:]
                 Tools.send_direct_message(member.id, msg)
-                await commands_channel.send(f'{member} got spammed on joining')
+                await commands_channel.send(f'welcome {member}')
                 self.client.db.delete(f'{member.id}.spam_on_join')
             except:
-                await commands_channel.send(f'Ummm, I got an error while spamming {member} upon joining')
+                await commands_channel.send(f'failed to welcome {member} upon joining')
 
 
 
